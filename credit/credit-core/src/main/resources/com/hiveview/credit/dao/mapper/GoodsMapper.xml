@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiveview.credit.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.hiveview.credit.entity.Goods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_type" jdbcType="BIT" property="goodsType" />
+    <result column="goods_subtitle" jdbcType="VARCHAR" property="goodsSubtitle" />
+    <result column="goods_cover_url" jdbcType="VARCHAR" property="goodsCoverUrl" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="goods_stock" jdbcType="INTEGER" property="goodsStock" />
+    <result column="goods_status" jdbcType="INTEGER" property="goodsStatus" />
+    <result column="goods_audit_description" jdbcType="VARCHAR" property="goodsAuditDescription" />
+    <result column="goods_shelf_time" jdbcType="TIMESTAMP" property="goodsShelfTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="freight" jdbcType="DECIMAL" property="freight" />
+    <result column="merchant_id" jdbcType="VARCHAR" property="merchantId" />
+    <result column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="integral_rule_id" jdbcType="INTEGER" property="integralRuleId" />
+    <result column="goods_exchange_integral" jdbcType="INTEGER" property="goodsExchangeIntegral" />
+    <result column="same_device_limited" jdbcType="BIT" property="sameDeviceLimited" />
+    <result column="same_device_limited_number" jdbcType="INTEGER" property="sameDeviceLimitedNumber" />
+    <result column="same_user_limited" jdbcType="BIT" property="sameUserLimited" />
+    <result column="same_user_limited_number" jdbcType="INTEGER" property="sameUserLimitedNumber" />
+    <result column="settlement_basis_id" jdbcType="BIT" property="settlementBasisId" />
+    <result column="sequence_number" jdbcType="BIGINT" property="sequenceNumber" />
+    <result column="orginal_price" jdbcType="DECIMAL" property="orginalPrice" />
+    <result column="viral_card_id" jdbcType="BIGINT" property="viralCardId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    g.id, g.goods_name, g.goods_type, g.goods_subtitle, g.goods_cover_url, g.goods_price, g.goods_stock,
+    g.goods_status, g.goods_audit_description, g.goods_shelf_time, g.create_time, g.update_time,
+    g.freight, g.merchant_id, g.merchant_name, g.integral_rule_id, g.goods_exchange_integral, g.same_device_limited,
+    g.same_device_limited_number, g.same_user_limited, g.same_user_limited_number, g.settlement_basis_id,
+    g.sequence_number, g.orginal_price, g.viral_card_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and g.id = #{params.id,jdbcType=BIGINT}
+      </if>
+      <if test="params.goodsName != null and '' != params.goodsName">
+        and instr(g.goods_name, #{params.goodsName,jdbcType=VARCHAR}) &gt; 0
+      </if>
+      <if test="params.goodsType != null" >
+        and g.goods_type = #{params.goodsType,jdbcType=BIT}
+      </if>
+      <if test="params.goodsSubtitle != null and '' != params.goodsSubtitle" >
+        and g.goods_subtitle = #{params.goodsSubtitle,jdbcType=VARCHAR}
+      </if>
+      <if test="params.goodsCoverUrl != null and '' != params.goodsCoverUrl">
+        and g.goods_cover_url = #{params.goodsCoverUrl,jdbc=VARCHAR}
+      </if>
+      <if test="params.goodsPrice != null" >
+        and g.goods_price = #{params.goodsPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.goodsStock != null" >
+        and g.goods_stock = #{params.goodsStock,jdbcType=INTEGER}
+      </if>
+      <if test="params.goodsStatus != null and '' != params.goodsStatus" >
+        and g.goods_status = #{params.goodsStatus,jdbcType=INTEGER}
+      </if>
+      <if test="params.goodsAuditDescription != null">
+        and g.goods_audit_description = #{params.goodsAuditDescription,jdbcType=VARCHAR}
+      </if>
+      <if test="params.goodsShelfTime != null" >
+        and g.goods_shelf_time = #{params.goodsShelfTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createTime != null" >
+        and g.create_time = #{params.createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.updateTime != null" >
+        and g.update_time = #{params.updateTime,jdbc=TIMESTAMP}
+      </if>
+      <if test="params.freight != null" >
+        and g.freight = #{params.freight,jdbcType=DECIMAL}
+      </if>
+      <if test="params.merchantId != null and '' != params.merchantId" >
+        and g.merchant_id = #{params.merchantId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.merchantName != null and '' != params.merchantName" >
+        and g.merchant_name = #{params.merchantName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.integralRuleId != null" >
+        and g.integral_rule_id = #{params.integralRuleId,jdbcType=INTEGER}
+      </if>
+      <if test="params.goodsExchangeIntegral != null">
+        and g.goods_exchange_integral = #{params.goodsExchangeIntegral,jdbcType=INTEGER}
+      </if>
+      <if test="params.sameDeviceLimited != null" >
+        and g.same_device_limited = #{params.sameDeviceLimited,jdbcType=BIT}
+      </if>
+      <if test="params.sameDeviceLimitedNumber != null and '' != params.sameDeviceLimitedNumber" >
+        and g.same_device_limited_number = #{params.sameDeviceLimitedNumber,jdbcType=INTEGER}
+      </if>
+      <if test="params.sameUserLimited != null and '' != params.sameUserLimited">
+        and g.same_user_limited = #{params.sameUserLimited,jdbc=INTEGER}
+      </if>
+      <if test="params.sameUserLimitedNumber != null and '' != params.sameUserLimitedNumber" >
+        and g.same_user_limited_number = #{params.sameUserLimitedNumber,jdbcType=INTEGER}
+      </if>
+      <if test="params.settlementBasisId != null" >
+        and g.settlement_basis_id = #{params.settlementBasisId,jdbcType=BIT}
+      </if>
+      <if test="params.sequenceNumber != null" >
+        and g.sequence_number = #{params.sequenceNumber,jdbcType=INTEGER}
+      </if>
+      <if test="params.orginalPrice != null" >
+        and g.orginal_price = #{params.orginalPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.viralCardId != null">
+        and g.viral_card_id = #{params.viralCardId,jdbcType=BIGINT}
+      </if>
+      <if test="params.startTime != null" >
+        and g.goods_shelf_time &gt;= #{params.startTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.endTime != null">
+        and g.goods_shelf_time &lt;= #{params.startTime,jdbcType=TIMESTAMP}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_integral_mall_goods as g
+    where g.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_integral_mall_goods as g
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_integral_mall_goods as g
+    where 1=1
+    <include refid="condition" />
+    ORDER BY g.sequence_number DESC
+  </select>
+  <select id="getGoodsById" resultMap="BaseResultMap" parameterType="com.hiveview.credit.entity.Goods">
+    select
+    <include refid="Base_Column_List"/>
+    from t_integral_mall_goods AS g
+    WHERE g.id=#{id}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from t_integral_mall_goods g where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="getMaxSeq" resultType="java.lang.Integer">
+    select max(sequence_number) FROM t_integral_mall_goods
+  </select>
+  <select id="getMinSeq" resultType="java.lang.Integer">
+  select min(sequence_number) FROM t_integral_mall_goods
+</select>
+  <insert id="insert" parameterType="com.hiveview.credit.entity.Goods">
+    insert into t_integral_mall_goods (id, goods_name, goods_type, 
+      goods_subtitle, goods_cover_url, goods_price, 
+      goods_stock, goods_status, goods_audit_description, 
+      goods_shelf_time, create_time, update_time, 
+      freight, merchant_id, merchant_name, 
+      integral_rule_id, goods_exchange_integral, 
+      same_device_limited, same_device_limited_number, 
+      same_user_limited, same_user_limited_number, settlement_basis_id, 
+      sequence_number, orginal_price, viral_card_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, #{goodsType,jdbcType=BIT}, 
+      #{goodsSubtitle,jdbcType=VARCHAR}, #{goodsCoverUrl,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{goodsStock,jdbcType=INTEGER}, #{goodsStatus,jdbcType=INTEGER}, #{goodsAuditDescription,jdbcType=VARCHAR},
+      #{goodsShelfTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{freight,jdbcType=DECIMAL}, #{merchantId,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{integralRuleId,jdbcType=INTEGER}, #{goodsExchangeIntegral,jdbcType=INTEGER},
+      #{sameDeviceLimited,jdbcType=BIT}, #{sameDeviceLimitedNumber,jdbcType=INTEGER}, 
+      #{sameUserLimited,jdbcType=BIT}, #{sameUserLimitedNumber,jdbcType=INTEGER}, #{settlementBasisId,jdbcType=BIT}, 
+      #{sequenceNumber,jdbcType=BIGINT}, #{orginalPrice,jdbcType=DECIMAL}, #{viralCardId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hiveview.credit.entity.Goods">
+    insert into t_integral_mall_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsType != null">
+        goods_type,
+      </if>
+      <if test="goodsSubtitle != null">
+        goods_subtitle,
+      </if>
+      <if test="goodsCoverUrl != null">
+        goods_cover_url,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="goodsStock != null">
+        goods_stock,
+      </if>
+      <if test="goodsStatus != null">
+        goods_status,
+      </if>
+      <if test="goodsAuditDescription != null">
+        goods_audit_description,
+      </if>
+      <if test="goodsShelfTime != null">
+        goods_shelf_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="freight != null">
+        freight,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="merchantName != null">
+        merchant_name,
+      </if>
+      <if test="integralRuleId != null">
+        integral_rule_id,
+      </if>
+      <if test="goodsExchangeIntegral != null">
+        goods_exchange_integral,
+      </if>
+      <if test="sameDeviceLimited != null">
+        same_device_limited,
+      </if>
+      <if test="sameDeviceLimitedNumber != null">
+        same_device_limited_number,
+      </if>
+      <if test="sameUserLimited != null">
+        same_user_limited,
+      </if>
+      <if test="sameUserLimitedNumber != null">
+        same_user_limited_number,
+      </if>
+      <if test="settlementBasisId != null">
+        settlement_basis_id,
+      </if>
+      <if test="sequenceNumber != null">
+        sequence_number,
+      </if>
+      <if test="orginalPrice != null">
+        orginal_price,
+      </if>
+      <if test="viralCardId != null">
+        viral_card_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null">
+        #{goodsType,jdbcType=BIT},
+      </if>
+      <if test="goodsSubtitle != null">
+        #{goodsSubtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCoverUrl != null">
+        #{goodsCoverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsStock != null">
+        #{goodsStock,jdbcType=INTEGER},
+      </if>
+      <if test="goodsStatus != null">
+        #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAuditDescription != null">
+        #{goodsAuditDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsShelfTime != null">
+        #{goodsShelfTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="freight != null">
+        #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="integralRuleId != null">
+        #{integralRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsExchangeIntegral != null">
+        #{goodsExchangeIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="sameDeviceLimited != null">
+        #{sameDeviceLimited,jdbcType=BIT},
+      </if>
+      <if test="sameDeviceLimitedNumber != null">
+        #{sameDeviceLimitedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="sameUserLimited != null">
+        #{sameUserLimited,jdbcType=BIT},
+      </if>
+      <if test="sameUserLimitedNumber != null">
+        #{sameUserLimitedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="settlementBasisId != null">
+        #{settlementBasisId,jdbcType=BIT},
+      </if>
+      <if test="sequenceNumber != null">
+        #{sequenceNumber,jdbcType=BIGINT},
+      </if>
+      <if test="orginalPrice != null">
+        #{orginalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="viralCardId != null">
+        #{viralCardId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_integral_mall_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hiveview.credit.entity.Goods" >
+    delete from t_integral_mall_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hiveview.credit.entity.Goods">
+    update t_integral_mall_goods
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null">
+        goods_type = #{goodsType,jdbcType=BIT},
+      </if>
+      <if test="goodsSubtitle != null">
+        goods_subtitle = #{goodsSubtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCoverUrl != null">
+        goods_cover_url = #{goodsCoverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsStock != null">
+        goods_stock = #{goodsStock,jdbcType=INTEGER},
+      </if>
+      <if test="goodsStatus != null">
+        goods_status = #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAuditDescription != null">
+        goods_audit_description = #{goodsAuditDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsShelfTime != null">
+        goods_shelf_time = #{goodsShelfTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="freight != null">
+        freight = #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="integralRuleId != null">
+        integral_rule_id = #{integralRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsExchangeIntegral != null">
+        goods_exchange_integral = #{goodsExchangeIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="sameDeviceLimited != null">
+        same_device_limited = #{sameDeviceLimited,jdbcType=BIT},
+      </if>
+      <if test="sameDeviceLimitedNumber != null">
+        same_device_limited_number = #{sameDeviceLimitedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="sameUserLimited != null">
+        same_user_limited = #{sameUserLimited,jdbcType=BIT},
+      </if>
+      <if test="sameUserLimitedNumber != null">
+        same_user_limited_number = #{sameUserLimitedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="settlementBasisId != null">
+        settlement_basis_id = #{settlementBasisId,jdbcType=BIT},
+      </if>
+      <if test="sequenceNumber != null">
+        sequence_number = #{sequenceNumber,jdbcType=BIGINT},
+      </if>
+      <if test="orginalPrice != null">
+        orginal_price = #{orginalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="viralCardId != null">
+        viral_card_id = #{viralCardId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hiveview.credit.entity.Goods">
+    update t_integral_mall_goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_type = #{goodsType,jdbcType=BIT},
+      goods_subtitle = #{goodsSubtitle,jdbcType=VARCHAR},
+      goods_cover_url = #{goodsCoverUrl,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_stock = #{goodsStock,jdbcType=INTEGER},
+      goods_status = #{goodsStatus,jdbcType=INTEGER},
+      goods_audit_description = #{goodsAuditDescription,jdbcType=VARCHAR},
+      goods_shelf_time = #{goodsShelfTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      freight = #{freight,jdbcType=DECIMAL},
+      merchant_id = #{merchantId,jdbcType=VARCHAR},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      integral_rule_id = #{integralRuleId,jdbcType=INTEGER},
+      goods_exchange_integral = #{goodsExchangeIntegral,jdbcType=INTEGER},
+      same_device_limited = #{sameDeviceLimited,jdbcType=BIT},
+      same_device_limited_number = #{sameDeviceLimitedNumber,jdbcType=INTEGER},
+      same_user_limited = #{sameUserLimited,jdbcType=BIT},
+      same_user_limited_number = #{sameUserLimitedNumber,jdbcType=INTEGER},
+      settlement_basis_id = #{settlementBasisId,jdbcType=BIT},
+      sequence_number = #{sequenceNumber,jdbcType=BIGINT},
+      orginal_price = #{orginalPrice,jdbcType=DECIMAL},
+      viral_card_id = #{viralCardId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

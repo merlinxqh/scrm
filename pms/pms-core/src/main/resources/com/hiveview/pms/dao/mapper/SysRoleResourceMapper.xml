@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hiveview.pms.dao.SysRoleResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.hiveview.pms.entity.sys.SysRoleResource" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+    <result column="resource_code" property="resourceCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.role_code, t.resource_code
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and t.id = #{params.id,jdbcType=BIGINT}
+      </if>
+      <if test="params.roleCode != null and '' != params.roleCode" >
+        and t.role_code = #{params.roleCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.resourceCode != null and '' != params.resourceCode" >
+        and t.resource_code = #{params.resourceCode,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_resource t 
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_resource t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_role_resource t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_resource t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_role_resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hiveview.pms.entity.sys.SysRoleResource" >
+    delete from sys_role_resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hiveview.pms.entity.sys.SysRoleResource" >
+    insert into sys_role_resource (id, role_code, resource_code
+      )
+    values (#{id,jdbcType=BIGINT}, #{roleCode,jdbcType=VARCHAR}, #{resourceCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hiveview.pms.entity.sys.SysRoleResource" >
+    insert into sys_role_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roleCode != null" >
+        role_code,
+      </if>
+      <if test="resourceCode != null" >
+        resource_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roleCode != null" >
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceCode != null" >
+        #{resourceCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hiveview.pms.entity.sys.SysRoleResource" >
+    update sys_role_resource
+    <set >
+      <if test="roleCode != null" >
+        role_code = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceCode != null" >
+        resource_code = #{resourceCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hiveview.pms.entity.sys.SysRoleResource" >
+    update sys_role_resource
+    set role_code = #{roleCode,jdbcType=VARCHAR},
+      resource_code = #{resourceCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByRoleCode" parameterType="java.lang.String">
+    delete from sys_role_resource
+    where role_code = #{roleCode,jdbcType=VARCHAR}
+  </delete>
+</mapper>

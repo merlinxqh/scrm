@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" debug="false">
+    <!--加载外部属性文件-->
+    <property resource="application.properties" />
+    <!--<property file="application.properties" />-->
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--写入日志文件-->
+    <appender name="fileAppender"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/${application.name}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${log.path}/${application.name}-%d{yyyy-MM-dd}_%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--输出到logstash-->
+    <appender name="stashAppender" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${logstash.host}</destination>
+
+        <!-- encoder is required -->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
+        <!--只发送info级别以下的日志-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!--打印mybatis sql语句-->
+    <!--<logger name="org.springframework" level="DEBUG"/>-->
+    <logger name="dao" level="DEBUG"/>
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+        <!--控制台输出-->
+        <appender-ref ref="STDOUT" />
+        <!--输出到日志文件-->
+        <appender-ref ref="fileAppender" />
+        <!--输出到logstash-->
+        <!--<appender-ref ref="stashAppender" />-->
+    </root>
+</configuration>

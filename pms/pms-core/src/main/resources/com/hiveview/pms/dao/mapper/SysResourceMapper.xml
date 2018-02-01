@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hiveview.pms.dao.SysResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.hiveview.pms.entity.sys.SysResource" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="long_code" property="longCode" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="sub_system_code" property="subSystemCode" jdbcType="VARCHAR" />
+    <result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="is_menu" property="isMenu" jdbcType="INTEGER" />
+    <result column="orders" property="orders" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="icon_code" property="iconCode" jdbcType="VARCHAR" />
+    <result column="permission" property="permission" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.code, t.name, t.long_code, t.status, t.sub_system_code, t.parent_code, t.url, t.is_menu,
+    t.orders, t.level, t.icon_code, t.permission, t.remark, t.create_by as 'createBy', t.create_date,
+    t.last_update_by as 'lastUpdateBy', t.last_update_date
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and t.id = #{params.id,jdbcType=BIGINT}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and instr(t.name, #{params.name,jdbcType=VARCHAR}) &gt; 0
+      </if>
+      <if test="params.code != null and '' != params.code" >
+        and t.code = #{params.code,jdbcType=VARCHAR}
+      </if>
+      <if test="params.longCode != null and '' != params.longCode" >
+        and t.long_code = #{params.longCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status != null" >
+        and t.status = #{params.status,jdbcType=INTEGER}
+      </if>
+      <if test="params.subSystemCode != null and '' != params.subSystemCode" >
+        and t.sub_system_code = #{params.subSystemCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.parentCode != null and '' != params.parentCode" >
+        and t.parent_code = #{params.parentCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.url != null and '' != params.url" >
+        and t.url = #{params.url,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isMenu != null" >
+        and t.is_menu = #{params.isMenu,jdbcType=INTEGER}
+      </if>
+      <if test="params.orders != null" >
+        and t.orders = #{params.orders,jdbcType=INTEGER}
+      </if>
+      <if test="params.level != null" >
+        and t.level = #{params.level,jdbcType=INTEGER}
+      </if>
+      <if test="params.iconCode != null and '' != params.iconCode" >
+        and t.icon_code = #{params.iconCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.permission != null and '' != params.permission" >
+        and t.permission = #{params.permission,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <!-- 根据角色编码查询 -->
+      <if test="params.roleCode != null and '' != params.roleCode">
+         and EXISTS (select 1 from sys_role_resource r where r.role_code = #{params.roleCode,jdbcType=VARCHAR}
+                       and r.resource_code = t.code
+                    )
+      </if>
+      <if test="params.searchCode != null and '' != params.searchCode">
+        and instr(t.long_code,#{params.searchCode,jdbcType=VARCHAR})
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_resource t 
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_resource t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_resource t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_resource t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hiveview.pms.entity.sys.SysResource" >
+    delete from sys_resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hiveview.pms.entity.sys.SysResource" >
+    insert into sys_resource (id, code, name, long_code,
+      status, sub_system_code, parent_code, 
+      url, is_menu, orders, 
+      level, icon_code, permission, remark,
+      create_by, create_date, last_update_by, 
+      last_update_date)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{longCode,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{subSystemCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{isMenu,jdbcType=INTEGER}, #{orders,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{iconCode,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR},  #{remark,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hiveview.pms.entity.sys.SysResource" >
+    insert into sys_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="longCode != null" >
+        long_code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="subSystemCode != null" >
+        sub_system_code,
+      </if>
+      <if test="parentCode != null" >
+        parent_code,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="isMenu != null" >
+        is_menu,
+      </if>
+      <if test="orders != null" >
+        orders,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="iconCode != null" >
+        icon_code,
+      </if>
+      <if test="permission != null" >
+        permission,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="longCode != null" >
+        #{longCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="subSystemCode != null" >
+        #{subSystemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isMenu != null" >
+        #{isMenu,jdbcType=INTEGER},
+      </if>
+      <if test="orders != null" >
+        #{orders,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="iconCode != null" >
+        #{iconCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hiveview.pms.entity.sys.SysResource" >
+    update sys_resource
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="longCode != null" >
+        long_code = #{longCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="subSystemCode != null" >
+        sub_system_code = #{subSystemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        parent_code = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isMenu != null" >
+        is_menu = #{isMenu,jdbcType=INTEGER},
+      </if>
+      <if test="orders != null" >
+        orders = #{orders,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="iconCode != null" >
+        icon_code = #{iconCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hiveview.pms.entity.sys.SysResource" >
+    update sys_resource
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      long_code = #{longCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      sub_system_code = #{subSystemCode,jdbcType=VARCHAR},
+      parent_code = #{parentCode,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      is_menu = #{isMenu,jdbcType=INTEGER},
+      orders = #{orders,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      icon_code = #{iconCode,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+<!--校验是否包含下级-->
+  <select id="checkChildCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(1) from sys_resource
+    where parent_code=(select code from sys_resource where id = #{id,jdbcType=BIGINT})
+  </select>
+</mapper>

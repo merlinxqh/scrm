@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hiveview.pms.dao.BasicDataTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.hiveview.pms.entity.basic.BasicDataType" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+    <result column="multiple_online" property="multipleOnline" jdbcType="BIT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="long_code" property="longCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="orders" property="orders" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.code, t.parent_code, t.multiple_online, t.type, t.long_code, t.name, t.remark, 
+    t.level, t.orders, t.create_by, t.create_date
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and t.id = #{params.id,jdbcType=BIGINT}
+      </if>
+      <if test="params.code != null and '' != params.code" >
+        and t.code = #{params.code,jdbcType=VARCHAR}
+      </if>
+      <if test="params.parentCode != null and '' != params.parentCode" >
+        and t.parent_code = #{params.parentCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.multipleOnline != null" >
+        and t.multiple_online = #{params.multipleOnline,jdbcType=BIT}
+      </if>
+      <if test="params.type != null and '' != params.type" >
+        and t.type = #{params.type,jdbcType=VARCHAR}
+      </if>
+      <if test="params.longCode != null and '' != params.longCode" >
+        and t.long_code = #{params.longCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and t.name = #{params.name,jdbcType=VARCHAR}
+      </if>
+      <if test="params.remark != null and '' != params.remark" >
+        and t.remark = #{params.remark,jdbcType=VARCHAR}
+      </if>
+      <if test="params.level != null" >
+        and t.level = #{params.level,jdbcType=INTEGER}
+      </if>
+      <if test="params.orders != null" >
+        and t.orders = #{params.orders,jdbcType=INTEGER}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from basic_data_type t 
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from basic_data_type t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from basic_data_type t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from basic_data_type t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basic_data_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hiveview.pms.entity.basic.BasicDataType" >
+    delete from basic_data_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hiveview.pms.entity.basic.BasicDataType" >
+    insert into basic_data_type (id, code, parent_code, 
+      multiple_online, type, long_code, 
+      name, remark, level, 
+      orders, create_by, create_date
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
+      #{multipleOnline,jdbcType=BIT}, #{type,jdbcType=VARCHAR}, #{longCode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, 
+      #{orders,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hiveview.pms.entity.basic.BasicDataType" >
+    insert into basic_data_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="parentCode != null" >
+        parent_code,
+      </if>
+      <if test="multipleOnline != null" >
+        multiple_online,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="longCode != null" >
+        long_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="orders != null" >
+        orders,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="multipleOnline != null" >
+        #{multipleOnline,jdbcType=BIT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="longCode != null" >
+        #{longCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="orders != null" >
+        #{orders,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hiveview.pms.entity.basic.BasicDataType" >
+    update basic_data_type
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        parent_code = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="multipleOnline != null" >
+        multiple_online = #{multipleOnline,jdbcType=BIT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="longCode != null" >
+        long_code = #{longCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="orders != null" >
+        orders = #{orders,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hiveview.pms.entity.basic.BasicDataType" >
+    update basic_data_type
+    set code = #{code,jdbcType=VARCHAR},
+      parent_code = #{parentCode,jdbcType=VARCHAR},
+      multiple_online = #{multipleOnline,jdbcType=BIT},
+      type = #{type,jdbcType=VARCHAR},
+      long_code = #{longCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      orders = #{orders,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

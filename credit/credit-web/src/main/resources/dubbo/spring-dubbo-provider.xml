@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       default-lazy-init="true">
+    <!-- 子系统暴露服务接口 -->
+    <dubbo:service interface="com.hiveview.credit.api.DemoService" ref="demoService" timeout="30000" retries="3" version="1.0.0" registry="zookeeperService"/>
+    <bean id="demoService" class="com.hiveview.credit.api.DemoServiceImpl"/>
+
+    <dubbo:service interface="com.hiveview.credit.api.GoodsApiService" ref="goodsApiService" timeout="30000" retries="3" version="1.0.0" registry="zookeeperService"/>
+    <bean id="goodsApiService" class="com.hiveview.credit.api.GoodsApiServiceImpl"/>
+
+    <dubbo:service interface="com.hiveview.credit.api.ActualGoodsStockApiService" ref="actualGoodsStockApiService" timeout="30000" retries="3" version="1.0.0" registry="zookeeperService"/>
+    <bean id="actualGoodsStockApiService" class="com.hiveview.credit.api.ActualGoodsStockApiServiceImpl"/>
+
+</beans>

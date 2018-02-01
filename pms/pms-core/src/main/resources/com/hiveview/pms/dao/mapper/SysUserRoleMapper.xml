@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hiveview.pms.dao.SysUserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.hiveview.pms.entity.sys.SysUserRole" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.username, t.role_code
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and t.id = #{params.id,jdbcType=BIGINT}
+      </if>
+      <if test="params.username != null and '' != params.username" >
+        and t.username = #{params.username,jdbcType=VARCHAR}
+      </if>
+      <if test="params.roleCode != null and '' != params.roleCode" >
+        and t.role_code = #{params.roleCode,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_role t 
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_role t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_user_role t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_role t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_user_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hiveview.pms.entity.sys.SysUserRole" >
+    delete from sys_user_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hiveview.pms.entity.sys.SysUserRole" >
+    insert into sys_user_role (id, username, role_code
+      )
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hiveview.pms.entity.sys.SysUserRole" >
+    insert into sys_user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="roleCode != null" >
+        role_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null" >
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hiveview.pms.entity.sys.SysUserRole" >
+    update sys_user_role
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="roleCode != null" >
+        role_code = #{roleCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hiveview.pms.entity.sys.SysUserRole" >
+    update sys_user_role
+    set username = #{username,jdbcType=VARCHAR},
+      role_code = #{roleCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

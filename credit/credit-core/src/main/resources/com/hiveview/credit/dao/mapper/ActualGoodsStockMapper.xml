@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiveview.credit.dao.ActualGoodsStockMapper">
+  <resultMap id="BaseResultMap" type="com.hiveview.credit.entity.ActualGoodsStock">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="used_stock" jdbcType="INTEGER" property="usedStock" />
+    <result column="lock_stock" jdbcType="INTEGER" property="lockStock" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_id, stock, used_stock, lock_stock, create_time, update_time
+  </sql>
+  <sql id="condition">
+    <if test="params != null">
+      <if test="params.goodsId != null" >
+        and s.goods_id = #{params.goodsId,jdbcType=BIGINT}
+      </if>
+      <if test="params.stock != null" >
+        and s.stock = #{params.stock,jdbcType=INTEGER}
+      </if>
+      <if test="params.usedStock != null" >
+        and s.used_stock = #{params.userStock,jdbc=INTEGER}
+      </if>
+      <if test="params.lockStock != null" >
+        and s.lock_stock = #{params.lockStock,jdbcType=INTEGER}
+      </if>
+      <if test="params.createTime != null" >
+        and s.create_time = #{params.createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.updateTime != null" >
+        and s.update_time = #{params.updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.goodsIdList != null">
+        and s.goods_id in
+        <foreach index="index" collection="params.goodsIdList" separator="," open="(" close=")" item="item">
+          '${item}'
+        </foreach>
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods_stock
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByParams" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_goods_stock as s
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_goods_stock as s
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by s.${orderByField}
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="getPageCount" resultType="java.lang.Integer" parameterType="com.hiveview.credit.entity.ActualGoodsStock">
+    select count(1) from t_goods_stock
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goods_stock
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hiveview.credit.entity.ActualGoodsStock">
+    insert into t_goods_stock (id, goods_id, stock, 
+      used_stock, lock_stock, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{stock,jdbcType=INTEGER}, 
+      #{usedStock,jdbcType=INTEGER}, #{lockStock,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hiveview.credit.entity.ActualGoodsStock">
+    insert into t_goods_stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="stock != null">
+        stock,
+      </if>
+      <if test="usedStock != null">
+        used_stock,
+      </if>
+      <if test="lockStock != null">
+        lock_stock,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="usedStock != null">
+        #{usedStock,jdbcType=INTEGER},
+      </if>
+      <if test="lockStock != null">
+        #{lockStock,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hiveview.credit.entity.ActualGoodsStock">
+    update t_goods_stock
+    <set>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="stock != null">
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="usedStock != null">
+        used_stock = #{usedStock,jdbcType=INTEGER},
+      </if>
+      <if test="lockStock != null">
+        lock_stock = #{lockStock,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hiveview.credit.entity.ActualGoodsStock">
+    update t_goods_stock
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      stock = #{stock,jdbcType=INTEGER},
+      used_stock = #{usedStock,jdbcType=INTEGER},
+      lock_stock = #{lockStock,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

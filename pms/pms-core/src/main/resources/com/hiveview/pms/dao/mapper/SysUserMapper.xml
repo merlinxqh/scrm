@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hiveview.pms.dao.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.hiveview.pms.entity.sys.SysUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="default_role" property="defaultRole.code" jdbcType="VARCHAR" />
+    <result column="roleType" property="defaultRole.roleType" jdbcType="VARCHAR"/>
+    <result column="roleName" property="defaultRole.name" jdbcType="VARCHAR"/>
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.username, t.password, t.name, t.status, t.email, t.create_by as 'createBy', 
+    t.create_date, t.last_update_by as 'lastUpdateBy', t.last_update_date, t.default_role
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and t.id = #{params.id,jdbcType=BIGINT}
+      </if>
+      <if test="params.username != null and '' != params.username" >
+        and t.username = #{params.username,jdbcType=VARCHAR}
+      </if>
+      <if test="params.password != null and '' != params.password" >
+        and t.password = #{params.password,jdbcType=VARCHAR}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and t.name = #{params.name,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status != null" >
+        and t.status = #{params.status,jdbcType=INTEGER}
+      </if>
+      <if test="params.email != null and '' != params.email" >
+        and t.email = #{params.email,jdbcType=VARCHAR}
+      </if>
+      <if test="params.defaultRole != null and '' != params.defaultRole" >
+        and t.default_role = #{params.defaultRole,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user t 
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />,
+    r.role_type as "roleType",
+    r.name as "roleName"
+    from sys_user t
+    left join sys_role r on t.default_role = r.code
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_user t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />,
+    r.role_type as "roleType",
+    r.name as "roleName"
+    from sys_user t
+    left join sys_role r on t.default_role = r.code
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hiveview.pms.entity.sys.SysUser" >
+    delete from sys_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hiveview.pms.entity.sys.SysUser" >
+    insert into sys_user (id, username, password, 
+      name, status, email, default_role,
+      create_by, create_date, last_update_by, 
+      last_update_date)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{defaultRole.code,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hiveview.pms.entity.sys.SysUser" >
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="defaultRole != null" >
+        default_role,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultRole != null" >
+        #{defaultRole.code,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hiveview.pms.entity.sys.SysUser" >
+    update sys_user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultRole != null" >
+        default_role = #{defaultRole.code,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hiveview.pms.entity.sys.SysUser" >
+    update sys_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      default_role = #{defaultRole.code,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

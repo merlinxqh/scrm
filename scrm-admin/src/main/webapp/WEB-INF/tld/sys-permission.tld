@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>  
+    <short-name>sec</short-name>
+    <uri>http://sec.hiveview.com/sec-tags</uri>
+
+    <tag>
+        <name>requiredPermission</name>
+        <tag-class>com.hiveview.admin.commom.taglib.RequiredPermissionTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>resource</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

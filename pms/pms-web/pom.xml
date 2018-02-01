@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>pms</artifactId>
+        <groupId>com.hiveview</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>pms-web</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>pms-web Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <jetty.version>9.4.3.v20170317</jetty.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.hiveview</groupId>
+            <artifactId>pms-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>pms-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+                <configuration>
+                    <httpConnector>
+                        <port>8090</port>
+                        <idleTimeout>60000</idleTimeout>
+                    </httpConnector>
+                    <stopKey>26004</stopKey>
+                    <stopPort>26004</stopPort>
+                    <!-- 在很短的时间间隔内在扫描web应用检查是否有改变，如果发觉有任何改变则自动热部署。 -->
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                    <!-- Log to the console. -->
+                    <requestLog implementation="org.eclipse.jetty.server.NCSARequestLog">
+                        <!-- This doesn't do anything for Jetty, but is a workaround for a
+                            Maven bug that prevents the requestLog from being set. -->
+                        <append>true</append>
+                    </requestLog>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>XXPermSize</name>
+                            <value>512M</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>Xms</name>
+                            <value>256M</value>
+                        </systemProperty>
+                        <!--systemProperty> <name>mc4s.configuration.path</name> <value>e:/opt/mobiscloud/mc4s/conf</value>
+                            </systemProperty -->
+                    </systemProperties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

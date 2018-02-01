@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hiveview.schedule.dao.ScheduleJobMapper" >
+  <resultMap id="BaseResultMap" type="com.hiveview.schedule.entity.ScheduleJob" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="job_group" property="jobGroup" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="cron_expression" property="cronExpression" jdbcType="VARCHAR" />
+    <result column="bean_class" property="beanClass" jdbcType="VARCHAR" />
+    <result column="is_concurrent" property="isConcurrent" jdbcType="INTEGER" />
+    <result column="spring_id" property="springId" jdbcType="VARCHAR" />
+    <result column="method_name" property="methodName" jdbcType="VARCHAR" />
+    <result column="schedule_type" property="scheduleType" jdbcType="VARCHAR"/>
+    <result column="http_url" property="httpUrl" jdbcType="VARCHAR"/>
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.code, t.name, t.job_group, t.remark, t.status, t.cron_expression, t.bean_class, t.is_concurrent,
+    t.spring_id, t.method_name, t.schedule_type, t.http_url, t.create_by, t.create_date, t.last_update_by, t.last_update_date
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null" >
+        and t.id = #{params.id,jdbcType=BIGINT}
+      </if>
+      <if test="params.code != null and '' != params.code" >
+        and t.code = #{params.code,jdbcType=BIGINT}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and instr(t.name, #{params.name,jdbcType=VARCHAR}) &gt; 0
+      </if>
+      <if test="params.jobGroup != null and '' != params.jobGroup" >
+        and instr(t.job_group, #{params.jobGroup,jdbcType=VARCHAR}) &gt; 0
+      </if>
+      <if test="params.remark != null and '' != params.remark" >
+        and t.remark = #{params.remark,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status != null" >
+        and t.status = #{params.status,jdbcType=INTEGER}
+      </if>
+      <if test="params.cronExpression != null and '' != params.cronExpression" >
+        and t.cron_expression = #{params.cronExpression,jdbcType=VARCHAR}
+      </if>
+      <if test="params.beanClass != null and '' != params.beanClass" >
+        and t.bean_class = #{params.beanClass,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isConcurrent != null" >
+        and t.is_concurrent = #{params.isConcurrent,jdbcType=INTEGER}
+      </if>
+      <if test="params.springId != null and '' != params.springId" >
+        and t.spring_id = #{params.springId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.methodName != null and '' != params.methodName" >
+        and t.method_name = #{params.methodName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.scheduleType != null and '' != params.scheduleType" >
+        and t.schedule_type = #{params.scheduleType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.httpUrl != null and '' != params.httpUrl" >
+        and t.http_url = #{params.httpUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from schedule_job t 
+    where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from schedule_job t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from schedule_job t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from schedule_job t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from schedule_job
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hiveview.schedule.entity.ScheduleJob" >
+    delete from schedule_job
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hiveview.schedule.entity.ScheduleJob" >
+    insert into schedule_job (id, code, name, job_group,
+      remark, status, cron_expression, 
+      bean_class, is_concurrent, spring_id, 
+      method_name, schedule_type, http_url, create_by, create_date,
+      last_update_by, last_update_date)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR},
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{cronExpression,jdbcType=VARCHAR}, 
+      #{beanClass,jdbcType=VARCHAR}, #{isConcurrent,jdbcType=INTEGER}, #{springId,jdbcType=VARCHAR}, 
+      #{methodName,jdbcType=VARCHAR},#{scheduleType,jdbcType=VARCHAR},#{httpUrl,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hiveview.schedule.entity.ScheduleJob" >
+    insert into schedule_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="jobGroup != null" >
+        job_group,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="cronExpression != null" >
+        cron_expression,
+      </if>
+      <if test="beanClass != null" >
+        bean_class,
+      </if>
+      <if test="isConcurrent != null" >
+        is_concurrent,
+      </if>
+      <if test="springId != null" >
+        spring_id,
+      </if>
+      <if test="methodName != null" >
+        method_name,
+      </if>
+      <if test="scheduleType != null" >
+        schedule_type,
+      </if>
+      <if test="httpUrl != null" >
+        http_url,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null" >
+        #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cronExpression != null" >
+        #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="beanClass != null" >
+        #{beanClass,jdbcType=VARCHAR},
+      </if>
+      <if test="isConcurrent != null" >
+        #{isConcurrent,jdbcType=INTEGER},
+      </if>
+      <if test="springId != null" >
+        #{springId,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null" >
+        #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="scheduleType != null" >
+        #{scheduleType,jdbcType=VARCHAR},
+      </if>
+      <if test="httpUrl != null" >
+        #{httpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hiveview.schedule.entity.ScheduleJob" >
+    update schedule_job
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null" >
+        job_group = #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cronExpression != null" >
+        cron_expression = #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="beanClass != null" >
+        bean_class = #{beanClass,jdbcType=VARCHAR},
+      </if>
+      <if test="isConcurrent != null" >
+        is_concurrent = #{isConcurrent,jdbcType=INTEGER},
+      </if>
+      <if test="springId != null" >
+        spring_id = #{springId,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null" >
+        method_name = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="scheduleType != null" >
+        schedule_type = #{scheduleType,jdbcType=VARCHAR},
+      </if>
+      <if test="httpUrl != null" >
+        http_url = #{httpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hiveview.schedule.entity.ScheduleJob" >
+    update schedule_job
+    set name = #{name,jdbcType=VARCHAR},
+      job_group = #{jobGroup,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      cron_expression = #{cronExpression,jdbcType=VARCHAR},
+      bean_class = #{beanClass,jdbcType=VARCHAR},
+      is_concurrent = #{isConcurrent,jdbcType=INTEGER},
+      spring_id = #{springId,jdbcType=VARCHAR},
+      method_name = #{methodName,jdbcType=VARCHAR},
+      schedule_type = #{scheduleType,jdbcType=VARCHAR},
+      http_url = #{httpUrl,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

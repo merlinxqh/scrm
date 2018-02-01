@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <properties url="file:///E:/code/github/soa/pms/pms-web/src/main/resources/application.properties"/>
+  
+  <classPathEntry location="E:/maven_repo/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar" />
+  
+  <!-- This should cause an error because sqlMapGenerator is required
+       if there is no javaClientGenerator -->
+  <context id="MyBatis3NoClient" targetRuntime="MyBatis3" defaultModelType="flat">
+    <!-- <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" /> -->
+	
+	<commentGenerator type="org.mybatis.generator.ext.MyCommentGenerator">
+		<property name="suppressAllComments" value="false" />
+	</commentGenerator>
+
+	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/pms_db?useUnicode=true&amp;characterEncoding=utf-8"
+			userId="root" password="root" />
+	
+	<!-- 实体类 -->
+    <javaModelGenerator targetPackage="com.hiveview.pms.entity" targetProject="pms-entity">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+      <property name="rootClass" value="com.hiveview.base.common.BaseEntity"/>
+    </javaModelGenerator>
+	
+	<!-- sql文件 -->
+	<sqlMapGenerator targetPackage="com.hiveview.pms.dao.mapper" targetProject="pms-core/src/main/resources" />
+   		
+   	<!-- mapper层 -->
+	<javaClientGenerator type="XMLMAPPER" targetPackage="com.hiveview.pms.dao"
+     	targetProject="pms-core" interfaceExtendSupInterface="com.hiveview.base.dao.CrudMapper"
+     	mapperScanAnnotation="com.hiveview.base.mybatis.annotation.MyBatisDao">
+    </javaClientGenerator>
+	
+	<!-- service -->
+	<javaServiceGenerator targetPackage="com.hiveview.pms.service"
+		targetProject="pms-core" interfaceExtendSupInterface="com.hiveview.base.service.BaseCrudService"
+		extendSupClass="com.hiveview.base.service.impl.BaseCrudServiceImpl" />
+	
+    <tableSetting isSchema="true" enableCountByExample="false"
+		enableUpdateByExample="false" enableDeleteByExample="false"
+		enableSelectByExample="false" selectByExampleQueryId="false">
+		<prop name="replaceTablePrefix">
+			<list>
+				<prefix name="T" value="" />
+			</list>
+		</prop>
+		<!-- 忽略schema，避免在xml中出现schema.表名 -->
+		<prop name="ignoreGeneratorSchema" value="true" />
+	</tableSetting>
+  </context>
+
+</generatorConfiguration>
