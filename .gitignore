@@ -14,3 +14,4 @@ credit/credit-api/target/
 common-modules/rabbitmq/target/
 common-modules/common-api/target/
 common-modules/cache/target/
+common-modules/scrm-base/target/

@@ -18,6 +18,7 @@
     <aop:aspectj-autoproxy />
     <context:component-scan base-package="com.hiveview.schedule.service,
                                             com.hiveview.schedule.config,
+                                            com.hiveview.config,
                                             com.hiveview.base.spring">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>

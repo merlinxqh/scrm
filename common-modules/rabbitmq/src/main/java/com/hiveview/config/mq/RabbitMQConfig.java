@@ -39,6 +39,12 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.maxConsumers}")
     private int maxConsumers;
 
+    /**
+     * 是否设置消息回调
+     */
+    @Value("${rabbitmq.publisherConfirms}")
+    private boolean publisherConfirms;
+
 
     @Bean
     public ConnectionFactory connectionFactory(){
@@ -46,6 +52,8 @@ public class RabbitMQConfig {
         factory.setUsername(username);
         factory.setPort(port);
         factory.setPassword(password);
+        /** 如果要进行消息回调，则这里必须要设置为true */
+        factory.setPublisherConfirms(publisherConfirms);
         return factory;
     }
 

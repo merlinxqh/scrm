@@ -3,10 +3,8 @@ package com.hiveview.base.util.http;
 import com.alibaba.fastjson.JSON;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import lombok.Data;
-import org.springframework.util.CollectionUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.*;
 
 /**

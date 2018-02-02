@@ -2,7 +2,6 @@ package com.hiveview.credit.entity;
 
 import com.hiveview.base.common.BaseEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.math.BigInteger;
 import java.util.Date;

@@ -9,7 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>scrm-base</module>
         <module>common-modules</module>
         <module>credit</module>
         <module>pms</module>

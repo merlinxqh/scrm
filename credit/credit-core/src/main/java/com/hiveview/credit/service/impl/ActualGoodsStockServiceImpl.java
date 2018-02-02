@@ -5,7 +5,6 @@ import com.hiveview.base.service.impl.BaseCrudServiceImpl;
 import com.hiveview.credit.dao.ActualGoodsStockMapper;
 import com.hiveview.credit.entity.ActualGoodsStock;
 import com.hiveview.credit.service.ActualGoodsStockService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
