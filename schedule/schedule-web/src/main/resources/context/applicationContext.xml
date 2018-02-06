@@ -18,8 +18,7 @@
     <aop:aspectj-autoproxy />
     <context:component-scan base-package="com.hiveview.schedule.service,
                                             com.hiveview.schedule.config,
-                                            com.hiveview.config,
-                                            com.hiveview.base.spring">
+                                            com.hiveview.config">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
@@ -51,8 +50,4 @@
     </bean>
     <!-- 开启注解事务支持  @EnableTransactionManagement配置这个注解 有点问题-->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
-
-    <import resource="classpath:dubbo/spring-dubbo-core.xml"/>
-    <import resource="classpath:dubbo/spring-dubbo-consumer.xml"/>
-    <import resource="classpath:dubbo/spring-dubbo-provider.xml"/>
 </beans>

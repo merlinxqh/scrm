@@ -1,18 +1,18 @@
 package com.hiveview.credit.api;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.credit.common.WrapperApiService;
 import com.hiveview.credit.dto.ActualGoodsStockDto;
 import com.hiveview.credit.service.ActualGoodsStockService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by lijuan on 2018/1/29.
  */
-@Service
+@Service(registry = "zookeeperService")
 public class ActualGoodsStockApiServiceImpl implements ActualGoodsStockApiService {
     @Autowired
     private ActualGoodsStockService actualGoodsStockService;

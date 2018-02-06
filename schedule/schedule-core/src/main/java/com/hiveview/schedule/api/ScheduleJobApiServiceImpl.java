@@ -1,5 +1,6 @@
 package com.hiveview.schedule.api;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.ModifyCommonDto;
 import com.hiveview.common.api.PageDto;
@@ -8,7 +9,6 @@ import com.hiveview.schedule.dto.ScheduleJobDto;
 import com.hiveview.schedule.entity.ScheduleJob;
 import com.hiveview.schedule.service.ScheduleJobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by leo on 2018/1/10.
  */
-@Service("scheduleJobApiService")
+@Service(registry = "zookeeperService")
 public class ScheduleJobApiServiceImpl implements ScheduleJobApiService {
 
     @Autowired

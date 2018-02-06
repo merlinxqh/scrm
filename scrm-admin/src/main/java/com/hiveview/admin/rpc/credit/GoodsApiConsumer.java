@@ -1,5 +1,6 @@
 package com.hiveview.admin.rpc.credit;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.credit.api.GoodsApiService;
 import com.hiveview.credit.dto.GoodsDto;
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class GoodsApiConsumer {
-    @Autowired
+
+    @Reference(registry = "zookeeperClient")
     private GoodsApiService goodsApiServive;
 
     /**

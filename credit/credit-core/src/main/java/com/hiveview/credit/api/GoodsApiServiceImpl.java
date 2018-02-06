@@ -1,5 +1,6 @@
 package com.hiveview.credit.api;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.credit.common.WrapperApiService;
@@ -8,9 +9,8 @@ import com.hiveview.credit.dto.GoodsDto;
 import com.hiveview.credit.entity.ActualGoodsStock;
 import com.hiveview.credit.entity.Goods;
 import com.hiveview.credit.service.ActualGoodsStockService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.hiveview.credit.service.GoodsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * Created by lijuan on 2018/1/29.
  */
-@Service
+@Service(registry = "zookeeperService")
 public class GoodsApiServiceImpl implements GoodsApiService {
 
     @Autowired

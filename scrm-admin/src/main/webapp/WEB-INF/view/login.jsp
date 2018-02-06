@@ -10,7 +10,7 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
     <meta name="author" content="Coderthemes">
 
-    <link rel="shortcut icon" href="images/favicon_1.ico">
+    <link rel="shortcut icon" href="${ctx}/assets/images/favicon_1.ico">
 
     <title>admin后台</title>
 
@@ -19,7 +19,7 @@
 
     <!-- Font Icons -->
     <link href="${ctx}/assets/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="${ctx}/assets/css/ionicons.min.css" rel="stylesheet" />
+    <link href="${ctx}/assets/js/common/ionicon/css/ionicons.min.css" rel="stylesheet" />
     <link href="${ctx}/assets/css/material-design-iconic-font.min.css" rel="stylesheet">
 
     <!-- animate css -->

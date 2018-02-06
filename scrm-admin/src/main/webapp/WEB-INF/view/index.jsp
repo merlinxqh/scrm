@@ -249,7 +249,7 @@
     </body>
     <script type="text/javascript">
 		var rootPath="${ctx}";
-		var imgPath="${imgPath}";//图片服务器路径
+		var imgPath="${imgServerPath}";//图片服务器路径
 	</script>
     
 </html>

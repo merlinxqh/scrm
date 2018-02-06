@@ -1,10 +1,10 @@
 package com.hiveview.admin.rpc.pms;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.pms.api.SysRoleApiService;
 import com.hiveview.pms.dto.RoleResourceDto;
 import com.hiveview.pms.dto.SysRoleDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 public class SysRoleApiConsumer {
 
-    @Autowired
+    @Reference(registry = "zookeeperClient")
     private SysRoleApiService sysRoleApiService;
 
     /**
@@ -29,7 +29,7 @@ public class SysRoleApiConsumer {
     }
 
     public SysRoleDto findById(String id){
-        Assert.hasText(id);
+        Assert.hasText(id, "ID不能为空");
         return sysRoleApiService.findById(Long.valueOf(id));
     }
     /**

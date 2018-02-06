@@ -1,12 +1,12 @@
 package com.hiveview.admin.rpc.pms;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONArray;
 import com.hiveview.base.common.TreeEntity;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.pms.api.SysResourceApiService;
 import com.hiveview.pms.dto.SysResourceDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 public class SysResourceApiConsumer {
 
-    @Autowired
+    @Reference(registry = "zookeeperClient")
     private SysResourceApiService sysResourceApiService;
 
     public List<SysResourceDto> getResourceByRole(String roleCode){
@@ -27,7 +27,7 @@ public class SysResourceApiConsumer {
     }
 
     public SysResourceDto findById(String id){
-        Assert.hasText(id);
+        Assert.hasText(id,"ID不能为空");
         return sysResourceApiService.findById(Long.valueOf(id));
     }
 

@@ -1,11 +1,11 @@
 package com.hiveview.admin.rpc.pms;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.pms.api.SysUserApiService;
 import com.hiveview.pms.dto.SysUserDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -18,7 +18,7 @@ import java.util.List;
 public class SysUserApiConsumer {
     private static final Logger logger= LoggerFactory.getLogger(SysUserApiConsumer.class);
 
-    @Autowired
+    @Reference(registry = "zookeeperClient")
     private SysUserApiService sysUserApiService;
 
     public SysUserDto getUserByUserName(String userName){
@@ -37,7 +37,7 @@ public class SysUserApiConsumer {
     }
 
     public SysUserDto findById(String id){
-        Assert.hasText(id);
+        Assert.hasText(id, "ID不能为空");
         return sysUserApiService.findById(Long.valueOf(id));
     }
 

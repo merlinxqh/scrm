@@ -39,6 +39,9 @@
 			<ref bean="shiroFilterChainDefinitions"/>
 		</property>
 	</bean>
+	<bean id="formAuthenticationFilter" class="com.hiveview.admin.commom.security.FormAuthenticationFilter">
+
+	</bean>
 	
 	
 	<!-- 定义Shiro安全管理配置 -->

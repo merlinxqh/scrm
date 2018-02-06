@@ -1,10 +1,10 @@
 package com.hiveview.admin.rpc.schedule;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.hiveview.common.api.ModifyCommonDto;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.schedule.api.ScheduleJobApiService;
 import com.hiveview.schedule.dto.ScheduleJobDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduleApiConsumer {
 
-    @Autowired
+    @Reference(registry = "zookeeperClient")
     private ScheduleJobApiService scheduleJobApiService;
 
 

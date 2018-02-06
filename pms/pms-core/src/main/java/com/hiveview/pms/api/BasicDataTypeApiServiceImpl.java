@@ -1,5 +1,6 @@
 package com.hiveview.pms.api;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.pms.common.WrapperApiService;
@@ -7,7 +8,6 @@ import com.hiveview.pms.dto.BasicDataTypeDto;
 import com.hiveview.pms.entity.basic.BasicDataType;
 import com.hiveview.pms.service.BasicDataTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by leo on 2018/1/15.
  */
-@Service("basicDataTypeApiService")
+@Service(registry = "zookeeperService")
 public class BasicDataTypeApiServiceImpl implements BasicDataTypeApiService {
 
     @Autowired

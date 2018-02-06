@@ -1,12 +1,11 @@
 package com.hiveview.admin.controller.pms;
 
 import com.hiveview.admin.commom.BaseController;
+import com.hiveview.admin.rpc.pms.BasicDataApiConsumer;
 import com.hiveview.base.util.response.RespMsg;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.ModifyCommonDto;
 import com.hiveview.common.api.PageDto;
-import com.hiveview.pms.api.BasicDataApiService;
-import com.hiveview.pms.api.BasicDataTypeApiService;
 import com.hiveview.pms.dto.BasicDataDto;
 import com.hiveview.pms.dto.BasicDataTypeDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +29,7 @@ import java.util.List;
 public class BasicDataController extends BaseController {
 
     @Autowired
-    private BasicDataApiService basicDataApiService;
-
-    @Autowired
-    private BasicDataTypeApiService basicDataTypeApiService;
+    private BasicDataApiConsumer basicDataApiConsumer;
 
 
     /**
@@ -75,7 +71,7 @@ public class BasicDataController extends BaseController {
         if(StringUtils.hasText(dto.getParentCode())){//不是添加一级商品分类
             dto.setCode(dto.getParentCode());
             dto.setParentCode(null);
-            List<BasicDataTypeDto> dtoList = basicDataTypeApiService.findList(dto);
+            List<BasicDataTypeDto> dtoList = basicDataApiConsumer.findTypeList(dto);
             if(!CollectionUtils.isEmpty(dtoList)){
                 model.put("parent",dtoList.get(0));
             }
@@ -90,7 +86,7 @@ public class BasicDataController extends BaseController {
      */
     @RequestMapping(value = "editType",method = RequestMethod.GET)
     public ModelAndView editType(ModelMap model,@RequestParam(value = "id") String id){
-        BasicDataTypeDto dto = basicDataTypeApiService.findById(Long.valueOf(id));
+        BasicDataTypeDto dto = basicDataApiConsumer.findTypeById(Long.valueOf(id));
         model.put("data",dto);
         return new ModelAndView("pms/basic/basicData_type_edit");
     }
@@ -113,7 +109,7 @@ public class BasicDataController extends BaseController {
      */
     @RequestMapping(value = "editData",method = RequestMethod.GET)
     public ModelAndView editData(ModelMap model, @RequestParam(value = "id") String id){
-        model.put("data",basicDataApiService.findById(Long.valueOf(id)));
+        model.put("data",basicDataApiConsumer.findById(Long.valueOf(id)));
         return new ModelAndView("pms/basic/basicData_edit");
     }
 
@@ -124,7 +120,7 @@ public class BasicDataController extends BaseController {
     @RequestMapping(value = "modifyData",method = RequestMethod.POST)
     public @ResponseBody RespMsg<?> modifyData(ModifyCommonDto dto){
         try {
-            basicDataApiService.modifyData(dto);
+            basicDataApiConsumer.moidfyData(dto);
         }catch (Exception e){
             return RespMsg.failResp(e.getMessage());
         }
@@ -137,7 +133,7 @@ public class BasicDataController extends BaseController {
      */
     @RequestMapping(value = "typeTreeData",method = RequestMethod.POST)
     public @ResponseBody Object typeTreeData(){
-        List<BasicDataTypeDto> typeList = basicDataTypeApiService.findList(null);
+        List<BasicDataTypeDto> typeList = basicDataApiConsumer.findTypeList(null);
         return ObjectUtils.wrapperGetTreeSetHome(typeList);
     }
 
@@ -148,7 +144,7 @@ public class BasicDataController extends BaseController {
     @RequestMapping(value = "listData")
     @ResponseBody
     public PageDto listData(PageDto page, BasicDataDto params){
-        return basicDataApiService.findPage(page, params);
+        return basicDataApiConsumer.findByPage(page, params);
     }
 
     /**
@@ -159,7 +155,7 @@ public class BasicDataController extends BaseController {
     public @ResponseBody RespMsg<?> saveData(BasicDataDto dto){
         try {
             putOperatorInfo(dto);
-            basicDataApiService.saveData(dto);
+            basicDataApiConsumer.saveData(dto);
         }catch (Exception e){
             return RespMsg.failResp(e.getMessage());
         }
@@ -174,7 +170,7 @@ public class BasicDataController extends BaseController {
     public @ResponseBody RespMsg saveTypeData(BasicDataTypeDto dto){
         try {
             putOperatorInfo(dto);
-            basicDataTypeApiService.saveData(dto);
+            basicDataApiConsumer.saveTypeData(dto);
         }catch (Exception e){
             return RespMsg.failResp(e.getMessage());
         }

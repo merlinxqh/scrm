@@ -4,6 +4,7 @@ import com.hiveview.admin.commom.BaseController;
 import com.hiveview.admin.commom.security.FormAuthenticationFilter;
 import com.hiveview.admin.commom.util.StringUtils;
 import com.hiveview.admin.commom.SystemUserUtils;
+import com.hiveview.base.common.properties.Global;
 import com.hiveview.pms.dto.SysResourceDto;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -74,6 +75,7 @@ public class LoginController extends BaseController {
     @RequestMapping(value="/index")
     public ModelAndView index(ModelMap model){
         getMenuData(model);
+        model.put("imgServerPath", Global.getConfig("tracker_http_server"));//图片服务器路径
         return new ModelAndView("index");
     }
 

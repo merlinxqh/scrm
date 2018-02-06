@@ -1,5 +1,6 @@
 package com.hiveview.pms.api;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.pms.common.WrapperApiService;
@@ -7,7 +8,6 @@ import com.hiveview.pms.dto.SysUserDto;
 import com.hiveview.pms.entity.sys.SysUser;
 import com.hiveview.pms.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by leo on 2017/11/6.
  */
-@Service
+@Service(registry = "zookeeperService")
 public class SysUserApiServiceImpl implements SysUserApiService {
 
     @Autowired

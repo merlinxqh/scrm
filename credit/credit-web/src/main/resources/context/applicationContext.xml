@@ -18,8 +18,7 @@
 
     <context:component-scan base-package="com.hiveview.credit.service,
                                             com.hiveview.credit.config,
-                                            com.hiveview.config,
-                                            com.hiveview.base.spring">
+                                            com.hiveview.config">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
@@ -44,8 +43,4 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
-
-    <import resource="classpath:dubbo/spring-dubbo-core.xml"/>
-    <import resource="classpath:dubbo/spring-dubbo-consumer.xml"/>
-    <import resource="classpath:dubbo/spring-dubbo-provider.xml"/>
 </beans>

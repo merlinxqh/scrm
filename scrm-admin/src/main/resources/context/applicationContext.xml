@@ -11,8 +11,7 @@
     <!--激活自动代理-->
     <aop:aspectj-autoproxy/>
     <context:component-scan base-package="com.hiveview.config,
-                                            com.hiveview.admin,
-                                            com.hiveview.base.spring">
+                                            com.hiveview.admin">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
@@ -34,9 +33,5 @@
             </list>
         </property>
     </bean>
-
-    <!--<import resource="classpath:context/applicationContext-cache.xml" />-->
-    <import resource="classpath:context/applicationContext-shiro.xml" />
-    <import resource="classpath:dubbo/spring-dubbo-core.xml"/>
-    <import resource="classpath:dubbo/spring-dubbo-consumer.xml"/>
+    <import resource="applicationContext-shiro.xml"></import>
 </beans>

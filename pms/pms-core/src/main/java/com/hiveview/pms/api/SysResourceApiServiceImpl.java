@@ -1,5 +1,6 @@
 package com.hiveview.pms.api;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.PageDto;
 import com.hiveview.pms.common.WrapperApiService;
@@ -10,7 +11,6 @@ import com.hiveview.pms.enums.RoleTypeEnums;
 import com.hiveview.pms.service.SysResourceService;
 import com.hiveview.pms.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * Created by leo on 2017/11/6.
  */
-@Service
+@Service(registry = "zookeeperService")
 public class SysResourceApiServiceImpl implements SysResourceApiService {
 
     @Autowired
