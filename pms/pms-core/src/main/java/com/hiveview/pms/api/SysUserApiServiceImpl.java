@@ -3,6 +3,7 @@ package com.hiveview.pms.api;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.PageDto;
+import com.hiveview.config.dubbo.DubboConfiguration;
 import com.hiveview.pms.common.WrapperApiService;
 import com.hiveview.pms.dto.SysUserDto;
 import com.hiveview.pms.entity.sys.SysUser;
@@ -18,7 +19,7 @@ import java.util.Map;
 /**
  * Created by leo on 2017/11/6.
  */
-@Service(registry = "zookeeperService")
+@Service(registry = DubboConfiguration.ZOOKEEPER_SERVICE)
 public class SysUserApiServiceImpl implements SysUserApiService {
 
     @Autowired

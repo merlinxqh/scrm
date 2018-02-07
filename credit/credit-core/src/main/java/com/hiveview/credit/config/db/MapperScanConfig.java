@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MapperScanConfig {
+
 	@Bean
 	public MapperScannerConfigurer mapperScannerConfigurer() throws Exception {
 		MapperScannerConfigurer configurer = new MapperScannerConfigurer();

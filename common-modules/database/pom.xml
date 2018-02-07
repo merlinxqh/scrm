@@ -1,26 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>scrm-parent</artifactId>
+        <artifactId>common-modules</artifactId>
         <groupId>com.hiveview</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-modules</artifactId>
+    <artifactId>database</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>scrm-base</module>
-        <module>common-api</module>
-        <module>rabbitmq</module>
-        <module>cache</module>
-        <module>roketmq</module>
-        <module>rpc-dubbo</module>
-        <module>database</module>
-    </modules>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>common-modules</name>
+    <name>database</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -33,6 +24,11 @@
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.hiveview</groupId>
+            <artifactId>scrm-base</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

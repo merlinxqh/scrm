@@ -2,6 +2,7 @@ package com.hiveview.admin.rpc.pms;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.hiveview.common.api.PageDto;
+import com.hiveview.config.dubbo.DubboConfiguration;
 import com.hiveview.pms.api.SysRoleApiService;
 import com.hiveview.pms.dto.RoleResourceDto;
 import com.hiveview.pms.dto.SysRoleDto;
@@ -16,7 +17,7 @@ import java.util.List;
 @Component
 public class SysRoleApiConsumer {
 
-    @Reference(registry = "zookeeperClient")
+    @Reference(registry = DubboConfiguration.ZOOKEEPER_CLIENT)
     private SysRoleApiService sysRoleApiService;
 
     /**

@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.ModifyCommonDto;
 import com.hiveview.common.api.PageDto;
+import com.hiveview.config.dubbo.DubboConfiguration;
 import com.hiveview.schedule.common.WrapperApiService;
 import com.hiveview.schedule.dto.ScheduleJobDto;
 import com.hiveview.schedule.entity.ScheduleJob;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by leo on 2018/1/10.
  */
-@Service(registry = "zookeeperService")
+@Service(registry = DubboConfiguration.ZOOKEEPER_SERVICE)
 public class ScheduleJobApiServiceImpl implements ScheduleJobApiService {
 
     @Autowired

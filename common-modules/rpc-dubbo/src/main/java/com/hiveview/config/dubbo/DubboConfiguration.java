@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * dubbo 配置
  */
 @Configuration
-public class DubboConfigration {
+public class DubboConfiguration {
 
     @Value("${dubbo.application.name}")
     private String appName;
@@ -40,9 +40,9 @@ public class DubboConfigration {
 
     private static final String PROTOCOL_ZOOKEEPER = "zookeeper";
 
-    private static final String ZOOKEEPER_SERVICE = "zookeeperService";
+    public static final String ZOOKEEPER_SERVICE = "zookeeperService";
 
-    private static final String ZOOKEEPER_CLIENT = "zookeeperClient";
+    public static final String ZOOKEEPER_CLIENT = "zookeeperClient";
 
     @Bean
     public ApplicationConfig applicationConfig(){
@@ -64,6 +64,7 @@ public class DubboConfigration {
         RegistryConfig config = new RegistryConfig();
         config.setProtocol(PROTOCOL_ZOOKEEPER);
         config.setId(ZOOKEEPER_SERVICE);
+        config.setCheck(false);//关闭注册中心启动时检查 (注册订阅失败时报错)
         config.setAddress(address);
         return config;
     }
@@ -74,6 +75,7 @@ public class DubboConfigration {
         config.setProtocol(PROTOCOL_ZOOKEEPER);
         config.setId(ZOOKEEPER_CLIENT);
         config.setAddress(clientAddress);
+        config.setCheck(false);//关闭注册中心启动时检查 (注册订阅失败时报错)
         config.setDefault(false);
         config.setRegister(true);//是否注册
         return config;

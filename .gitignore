@@ -17,3 +17,4 @@ common-modules/cache/target/
 common-modules/scrm-base/target/
 common-modules/rpc-dubbo/target/
 common-modules/roketmq/target/
+common-modules/database/target/

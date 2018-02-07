@@ -2,6 +2,7 @@ package com.hiveview.credit.api;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.hiveview.common.api.PageDto;
+import com.hiveview.config.dubbo.DubboConfiguration;
 import com.hiveview.credit.common.WrapperApiService;
 import com.hiveview.credit.dto.ActualGoodsStockDto;
 import com.hiveview.credit.service.ActualGoodsStockService;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Created by lijuan on 2018/1/29.
  */
-@Service(registry = "zookeeperService")
+@Service(registry = DubboConfiguration.ZOOKEEPER_SERVICE)
 public class ActualGoodsStockApiServiceImpl implements ActualGoodsStockApiService {
     @Autowired
     private ActualGoodsStockService actualGoodsStockService;

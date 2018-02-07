@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.hiveview.base.common.TreeEntity;
 import com.hiveview.base.util.serializer.ObjectUtils;
 import com.hiveview.common.api.PageDto;
+import com.hiveview.config.dubbo.DubboConfiguration;
 import com.hiveview.pms.api.SysResourceApiService;
 import com.hiveview.pms.dto.SysResourceDto;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ import java.util.List;
 @Component
 public class SysResourceApiConsumer {
 
-    @Reference(registry = "zookeeperClient")
+    @Reference(registry = DubboConfiguration.ZOOKEEPER_CLIENT)
     private SysResourceApiService sysResourceApiService;
 
     public List<SysResourceDto> getResourceByRole(String roleCode){

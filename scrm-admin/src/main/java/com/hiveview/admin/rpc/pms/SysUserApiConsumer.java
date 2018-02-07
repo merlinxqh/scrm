@@ -2,6 +2,7 @@ package com.hiveview.admin.rpc.pms;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.hiveview.common.api.PageDto;
+import com.hiveview.config.dubbo.DubboConfiguration;
 import com.hiveview.pms.api.SysUserApiService;
 import com.hiveview.pms.dto.SysUserDto;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ import java.util.List;
 public class SysUserApiConsumer {
     private static final Logger logger= LoggerFactory.getLogger(SysUserApiConsumer.class);
 
-    @Reference(registry = "zookeeperClient")
+    @Reference(registry = DubboConfiguration.ZOOKEEPER_CLIENT)
     private SysUserApiService sysUserApiService;
 
     public SysUserDto getUserByUserName(String userName){

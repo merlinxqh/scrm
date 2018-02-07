@@ -1,4 +1,4 @@
-package com.hiveview.pms.config.db;
+package com.hiveview.config.db;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.hiveview.base.db.DynamicRoutingDataSource;
@@ -58,6 +58,9 @@ public class DataSourceConfig {
 
     @Value("${druid.validationQuery}")
     private String validationQuery;
+
+    @Value("${mybatis.mapper.resource}")
+    private String mapperResource;//Mapper.xml资源包路径
 
 
     public DruidDataSource dataSource(){
@@ -126,7 +129,7 @@ public class DataSourceConfig {
         sessionFactory.setConfigLocation(resource);
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
-            sessionFactory.setMapperLocations(resolver.getResources("classpath:com/hiveview/pms/dao/mapper/*Mapper.xml"));
+            sessionFactory.setMapperLocations(resolver.getResources(mapperResource));
             return sessionFactory.getObject();
         } catch (Exception e) {
             throw new RuntimeException(e);

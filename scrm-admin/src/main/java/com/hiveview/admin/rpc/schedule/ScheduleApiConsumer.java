@@ -3,6 +3,7 @@ package com.hiveview.admin.rpc.schedule;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.hiveview.common.api.ModifyCommonDto;
 import com.hiveview.common.api.PageDto;
+import com.hiveview.config.dubbo.DubboConfiguration;
 import com.hiveview.schedule.api.ScheduleJobApiService;
 import com.hiveview.schedule.dto.ScheduleJobDto;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduleApiConsumer {
 
-    @Reference(registry = "zookeeperClient")
+    @Reference(registry = DubboConfiguration.ZOOKEEPER_CLIENT)
     private ScheduleJobApiService scheduleJobApiService;
 
 

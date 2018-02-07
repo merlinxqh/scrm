@@ -3,6 +3,7 @@ package com.hiveview.admin.rpc.pms;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.hiveview.common.api.ModifyCommonDto;
 import com.hiveview.common.api.PageDto;
+import com.hiveview.config.dubbo.DubboConfiguration;
 import com.hiveview.pms.api.BasicDataApiService;
 import com.hiveview.pms.api.BasicDataTypeApiService;
 import com.hiveview.pms.dto.BasicDataDto;
@@ -18,10 +19,10 @@ import java.util.List;
 @Component
 public class BasicDataApiConsumer {
 
-    @Reference(registry = "zookeeperClient")
+    @Reference(registry = DubboConfiguration.ZOOKEEPER_CLIENT)
     private BasicDataApiService basicDataApiService;
 
-    @Reference(registry = "zookeeperClient")
+    @Reference(registry = DubboConfiguration.ZOOKEEPER_CLIENT)
     private BasicDataTypeApiService basicDataTypeApiService;
 
 
